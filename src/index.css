@@ -1,0 +1,10 @@
+:root {
+    --main-color: #0A65CC;
+}
+body {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 18px !important;
+    line-height: 28px !important;
+    color: #5E6670 !important;
+    background-color: #ffffff !important;
+}
