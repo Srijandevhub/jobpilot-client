@@ -1,0 +1,25 @@
+.wrapper {
+    padding-top: 100px;
+    padding-bottom: 70px;
+}
+.bx {
+    margin-bottom: 30px;
+}
+.link {
+    font-weight: 500;
+    color: #18191C;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+    display: inline-block;
+}
+.link:hover {
+    text-decoration: underline;
+    color: var(--main-color);
+}
+.action {
+    font-size: 14px;
+    line-height: 20px;
+    color: #767F8C;
+    display: block;
+    margin-top: 8px;
+}

@@ -8,3 +8,13 @@ body {
     color: #5E6670 !important;
     background-color: #ffffff !important;
 }
+.page-heading {
+    font-size: 40px;
+    line-height: 48px;
+    color: #18191C;
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+.text-center {
+    text-align: center;
+}

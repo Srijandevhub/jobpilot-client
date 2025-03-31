@@ -1,0 +1,107 @@
+.header {
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.headerTop {
+    background-color: #F1F2F4;
+}
+.headerMenu {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    gap: 24px;
+}
+.headerLink {
+    display: inline-block;
+    position: relative;
+    font-size: 14px;
+    line-height: 48px;
+    font-weight: 400;
+    color: #5E6670;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+.headerLink:hover {
+    color: var(--main-color);
+}
+.headerLink.active {
+    font-weight: 500;
+    color: var(--main-color);
+}
+.headerLink.active::before {
+    content: "";
+    background-color: var(--main-color);
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.headerMain {
+    position: relative;
+    padding: 4px;
+}
+.brand {
+    display: inline-block;
+    width: 143px;
+    margin-right: 32px;
+}
+.brand img {
+    max-width: 100%;
+}
+.search {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 51%;
+    padding: 9px 24px;
+    border: 1px solid #E4E5E8;
+    border-radius: 5px;
+}
+.searchIcon {
+    position: absolute;
+    top: 0px;
+    left: 0;
+}
+.searchIcon img {
+    max-width: 100%;
+}
+.input {
+    width: 100%;
+    height: 32px;
+    border: none;
+    outline: none;
+    padding-left: 35px;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+.input::placeholder {
+    color: #9199A3;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease-in-out;
+    font-family: "Inter", sans-serif;
+    outline: none;
+    cursor: pointer;
+    min-width: 101px;
+    min-height: 48px;
+    border: 1px solid #CEE0F5;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--main-color);
+    background-color: #ffffff;
+}
+.btn:hover {
+    background-color: #CEE0F5;
+    border-color: var(--main-color);
+}
