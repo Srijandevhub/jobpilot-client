@@ -18,3 +18,27 @@ body {
 .text-center {
     text-align: center;
 }
+.modal-title {
+    color: #18191C !important;
+}
+@media only screen and (max-width: 991px) {
+    body {
+        font-size: 15px !important;
+        line-height: 25px !important;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .container {
+        max-width: 100% !important;
+    }
+    .page-heading {
+        font-size: 35px;
+        line-height: 43px;
+    }
+}
+@media only screen and (max-width: 475px) {
+    .page-heading {
+        font-size: 29px;
+        line-height: 33px;
+    }
+}
