@@ -12,7 +12,7 @@ const HomeHero = () => {
         <div className={styles.wrapper}>
             <Container>
                 <Row>
-                    <Col lg={7}>
+                    <Col xl={7}>
                         <div className={styles.heroContent}>
                             <h1 className={styles.heading}>Find a job that suits<br/> your interest & skills.</h1>
                             <p className={styles.text}>Aliquam vitae turpis in diam convallis finibus in at risus. Nullam <br/> in scelerisque leo, eget sollicitudin velit bestibulum.</p>
@@ -33,14 +33,14 @@ const HomeHero = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col lg={5}>
+                    <Col xl={5} className='d-none d-xl-block'>
                         <div className='d-flex justify-content-end'>
                             <img src={Illustration} alt='hero' className={styles.heroImage}/>
                         </div>
                     </Col>
                 </Row>
                 <Row className={styles.counterRow}>
-                    <Col lg={3}>
+                    <Col lg={3} md={6} sm={6} className='mb-sm-2 mb-lg-0'>
                         <div className={styles.bx}>
                             <i className={styles.mediaIcon}>
                                 <img src={Icon1} alt='briefcase'/>
@@ -51,7 +51,7 @@ const HomeHero = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col lg={3}>
+                    <Col lg={3} md={6} sm={6} className='mb-sm-2 mb-lg-0'>
                         <div className={styles.bx}>
                             <i className={styles.mediaIcon}>
                                 <img src={Icon2} alt='building'/>
@@ -62,7 +62,7 @@ const HomeHero = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col lg={3}>
+                    <Col lg={3} md={6} sm={6}>
                         <div className={styles.bx}>
                             <i className={styles.mediaIcon}>
                                 <img src={Icon3} alt='users'/>
@@ -73,7 +73,7 @@ const HomeHero = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col lg={3}>
+                    <Col lg={3} md={6} sm={6}>
                         <div className={styles.bx}>
                             <i className={styles.mediaIcon}>
                                 <img src={Icon1} alt='briefcase'/>
