@@ -143,3 +143,67 @@
 .bx:hover .mediaIcon img {
     filter: brightness(0) invert(1);
 }
+@media only screen and (max-width: 1399px) {
+    .heroImage {
+        max-width: 461px;
+    }
+    .bx {
+        padding: 15px;
+    }
+}
+@media only screen and (max-width: 1199px) {
+    .heroImage {
+        max-width: 400px;
+    }
+    .bx {
+        padding: 15px;
+    }
+    .heroContent {
+        max-width: 100%;
+    }
+    .counter {
+        font-size: 20px;
+        line-height: 32px;
+    }
+    .counterRow {
+        margin-top: 60px !important;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .heading {
+        font-size: 46px;
+        line-height: 54px;
+    }
+}
+@media only screen and (max-width: 670px) {
+    .searchBx {
+        flex-direction: column;
+    }
+    .btn {
+        margin: 0px;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .textCol, .locationCol {
+        width: 100%;
+        border: none;
+    }
+    .icon {
+        left: 0;
+    }
+    .col {
+        width: 100%;
+    }
+    .control {
+        padding-left: 34px;
+    }
+}
+@media only screen and (max-width: 572px) {
+    .heading {
+        font-size: 36px;
+        line-height: 48px;
+    }
+    .heading br, .text br {
+        display: none;
+    }
+}
