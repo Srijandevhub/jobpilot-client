@@ -13,7 +13,7 @@ const HowWork = () => {
             <Container>
                 <h2 className='page-heading text-center'>How jobpilot work</h2>
                 <Row>
-                    <Col lg={3}>
+                    <Col lg={3} md={6}>
                         <div className={styles.bx}>
                             <span className={styles.arrw}>
                                 <img src={Arrw1} alt='arrw'/>
@@ -25,9 +25,9 @@ const HowWork = () => {
                             <p className={styles.text}>Aliquam facilisis egestas sapien, nec tempor leo tristique at.</p>
                         </div>
                     </Col>
-                    <Col lg={3}>
+                    <Col lg={3} md={6}>
                         <div className={styles.bx}>
-                            <span className={styles.arrw2}>
+                            <span className={`${styles.arrw2} ${styles.sArr}`}>
                                 <img src={Arrw2} alt='arrw'/>
                             </span>
                             <i className={styles.icon}>
@@ -37,9 +37,9 @@ const HowWork = () => {
                             <p className={styles.text}>Curabitur sit amet maximus ligula. Nam a nulla ante. Nam sodales</p>
                         </div>
                     </Col>
-                    <Col lg={3}>
+                    <Col lg={3} md={6} className='order-md-4 order-lg-3'>
                         <div className={styles.bx}>
-                            <span className={styles.arrw}>
+                            <span className={`${styles.arrw} ${styles.tArr}`}>
                                 <img src={Arrw1} alt='arrw'/>
                             </span>
                             <i className={styles.icon}>
@@ -49,7 +49,7 @@ const HowWork = () => {
                             <p className={styles.text}>Phasellus quis eleifend ex. Morbi nec fringilla nibh.</p>
                         </div>
                     </Col>
-                    <Col lg={3}>
+                    <Col lg={3} md={6} className='order-md-3 order-lg-4'>
                         <div className={styles.bx}>
                             <i className={styles.icon}>
                                 <img src={Icon4} alt='user'/>
