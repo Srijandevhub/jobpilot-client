@@ -6,6 +6,8 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<HomePage />}/>
+                <Route path="/signin" element={<SignInPage />}/>
+                <Route path="/register" element={<RegisterPage />}/>
             </Routes>
         </BrowserRouter>
     )
