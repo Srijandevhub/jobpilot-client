@@ -1,0 +1,32 @@
+.formGroup {
+    position: relative;
+    margin-bottom: 20px;
+}
+.control {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: var(--dark-color);
+    height: 46px;
+    border: 1px solid #E4E5E8;
+    background-color: transparent;
+    outline: none;
+    width: 100%;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    padding: 0 17px;
+}
+.control:focus {
+    border-color: var(--main-color);
+}
+.control::placeholder {
+    color: #767F8C;
+}
+.btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+}
