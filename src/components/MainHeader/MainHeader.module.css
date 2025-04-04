@@ -100,10 +100,18 @@
     line-height: 16px;
     color: var(--main-color);
     background-color: #ffffff;
+    text-decoration: none;
 }
 .btn:hover {
     background-color: #CEE0F5;
     border-color: var(--main-color);
+}
+.btn2 {
+    background-color: var(--main-color);
+    color: #ffffff;
+}
+.btn2:hover {
+    color: var(--main-color);
 }
 .navbarToogler, .mobileNav {
     display: none;
