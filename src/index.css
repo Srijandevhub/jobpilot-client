@@ -8,6 +8,9 @@ body {
     color: #5E6670 !important;
     background-color: #ffffff !important;
 }
+input, button {
+    font-family: "Inter", sans-serif !important;
+}
 .page-heading {
     font-size: 40px;
     line-height: 48px;
