@@ -86,9 +86,12 @@
     font-size: 16px;
     line-height: 16px;
 }
-.btn2:hover {
+.btn2:hover, .btn2.active {
     background-color: #CEE0F5;
     border-color: var(--main-color);
+}
+.btn2.active {
+    border-color: #0BA02C;
 }
 .filterWrapper {
     width: 300px;
