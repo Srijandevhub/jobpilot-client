@@ -18,7 +18,7 @@ const MainHeader = ({ menuActive = 'home' }) => {
                             <Link to="/" className={`${styles.headerLink} ${menuActive === 'home' ? `${styles.active}` : ''}`}>Home</Link>
                         </li>
                         <li>
-                            <Link to="/find-jobs" className={`${styles.headerLink} ${menuActive === 'findjob' ? `${styles.active}` : ''}`}>Find Job</Link>
+                            <Link to="/find-job" className={`${styles.headerLink} ${menuActive === 'findjob' ? `${styles.active}` : ''}`}>Find Job</Link>
                         </li>
                         <li>
                             <Link to="/explore-companies" className={`${styles.headerLink} ${menuActive === 'explorecompanies' ? `${styles.active}` : ''}`}>Explore Companies</Link>
