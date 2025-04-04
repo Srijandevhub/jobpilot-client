@@ -8,7 +8,6 @@ import AuthModal from '../Auth/AuthModal'
 
 const MainHeader = ({ menuActive = 'home' }) => {
     const [showMenu, setShowMenu] = useState(false);
-    const [showAuth, setShowAuth] = useState(false);
     return (
         <>
         <header className={`${styles.header}`}>
@@ -42,8 +41,9 @@ const MainHeader = ({ menuActive = 'home' }) => {
                             </div>
                         </div>
                         <div className={`flex-grow-1 ${styles.btnholder}`}>
-                            <div className='d-flex justify-content-end'>
-                                <button className={styles.btn} onClick={() => setShowAuth(true)}>Sign In</button>
+                            <div className='d-flex justify-content-end gap-1'>
+                                <Link to="/signin" className={styles.btn}>Sign In</Link>
+                                <Link to="/register" className={`${styles.btn} ${styles.btn2}`}>Register</Link>
                             </div>
                         </div>
                         <button className={styles.navbarToogler} aria-label='toogler' onClick={() => setShowMenu(true)}>
@@ -82,14 +82,14 @@ const MainHeader = ({ menuActive = 'home' }) => {
                         </ul>
                     </CardBody>
                     <CardFooter>
-                        <button className={`${styles.btn} w-100`}>
+                        <Link to="/login" className={`${styles.btn} w-100 mb-1`}>
                             Sign In
-                        </button>
+                        </Link>
+                        <Link to="/register" className={`${styles.btn} ${styles.btn2} w-100`}>Register</Link>
                     </CardFooter>
                 </Card>
             </aside>
         </header>
-        <AuthModal show={showAuth} handleHide={() => setShowAuth(false)}/>
         </>
     )
 }
