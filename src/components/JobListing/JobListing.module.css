@@ -1,0 +1,141 @@
+.wrapper {
+    padding: 24px 0;
+}
+.filterBx {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #E4E5E8;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-shadow: 0px 12px 40px 0px rgba(0, 44, 109, 0.08);
+    overflow: hidden;
+}
+.filter1, .filter2 {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 42%;
+    position: relative;
+}
+.filter2 {
+    width: 30%;
+    border-left: 1px solid #E4E5E8;
+}
+.filter3 {
+    flex-grow: 1;
+}
+.icon {
+    position: absolute;
+    top: 17px;
+    left: 18px;
+}
+.icon img {
+    max-width: 100%;
+}
+.control {
+    width: 100%;
+    height: 64px;
+    border: none;
+    outline: none;
+    padding-left: 54px;
+    padding-right: 17px;
+    font-family: "inter", sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+}
+.control::placeholder {
+    color: #9199A3;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    min-width: 131px;
+    background-color: var(--main-color);
+    border: 1px solid var(--main-color);
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    outline: none;
+    transition: 0.3s ease-in-out;
+    margin-left: 12px;
+}
+.btn:hover {
+    background-color: #CEE0F5;
+    color: var(--main-color);
+}
+.btn2 {
+    background-color: #E4E5E8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 56px;
+    min-width: 160px;
+    outline: none;
+    border: 1px solid #E4E5E8;
+    border-radius: 5px;
+    color: var(--main-color);
+    transition: 0.3s ease-in-out;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+}
+.btn2:hover {
+    background-color: #CEE0F5;
+    border-color: var(--main-color);
+}
+.filterWrapper {
+    width: 300px;
+    left: -300px;
+    transition: 0.3s ease-in-out;
+}
+.filterWrapper.active {
+    left: 0;
+}
+.heading {
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--dark-color);
+}
+.close {
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+.hd {
+    font-size: 14px;
+    line-height: 14px;
+    color: var(--main-color);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+@media only screen and (max-width: 1399px) {
+    .filter1 {
+        width: 41%;
+    }
+}
+@media only screen and (max-width: 1399px) {
+    .filter1 {
+        width: 36%;
+    }
+}
+@media only screen and (max-width: 1399px) {
+    .filter1, .filter2, .filter3 {
+        width: 100%;
+    }
+    .btn, .btn2 {
+        width: 100%;
+        margin: 0px;
+    }
+    .btn2 {
+        margin-bottom: 8px;
+    }
+}
