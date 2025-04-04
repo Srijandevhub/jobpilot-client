@@ -22,7 +22,7 @@ const Register = () => {
                                 <img src={Logo} alt="logo"/>
                             </span>
                             <h1 className="page-heading">Register</h1>
-                            <p className={styles.text}>Already have account? <Link to="/register">Log In</Link></p>
+                            <p className={styles.text}>Already have account? <Link to="/signin">Sign In</Link></p>
                             <Row>
                                 <Col md={6}>
                                     <InputGroup type={"text"} id={"name"} value={fullname} onChange={(val) => setFullname(val)} placeholder={"Full Name"}/>
