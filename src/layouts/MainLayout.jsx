@@ -1,9 +1,9 @@
 import MainHeader from "../components/MainHeader/MainHeader"
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children, menuActive }) => {
     return (
         <>
-        <MainHeader />
+        <MainHeader menuActive={menuActive}/>
         { children }
         </>
     )
