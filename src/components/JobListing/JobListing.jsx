@@ -1,11 +1,14 @@
-import { Card, CardBody, CardFooter, CardHeader, Container } from 'react-bootstrap'
+import { Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from 'react-bootstrap'
 import styles from './JobListing.module.css'
 import Search from '../../assets/fi_search.svg'
 import MapPin from '../../assets/fi_map-pin.svg'
 import { useState } from 'react'
+import JobBox from '../JobBox/JobBox'
+import JobDetails from '../JobDetails/JobDetails'
 
 const JobListing = () => {
     const [showFilters, setShowFilters] = useState(false);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
     return (
         <div className={styles.wrapper}>
             <Container>
@@ -30,6 +33,20 @@ const JobListing = () => {
                         </div>
                     </div>
                 </div>
+                <Row>
+                    <Col md={6} xl={4}>
+                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                    </Col>
+                    <Col md={6} xl={4}>
+                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                    </Col>
+                    <Col md={6} xl={4}>
+                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                    </Col>
+                    <Col md={6} xl={4}>
+                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                    </Col>
+                </Row>
             </Container>
             <aside className={`position-fixed top-0 ${styles.filterWrapper} ${showFilters ? `${styles.active}` : ''}`}>
                 <Card className='vh-100 rounded-0'>
@@ -53,6 +70,7 @@ const JobListing = () => {
                     </CardFooter>
                 </Card>
             </aside>
+            <JobDetails show={showDetailsModal} close={() => setShowDetailsModal(false)}/>
         </div>
     )
 }

@@ -10,6 +10,7 @@
     align-items: center;
     box-shadow: 0px 12px 40px 0px rgba(0, 44, 109, 0.08);
     overflow: hidden;
+    margin-bottom: 50px;
 }
 .filter1, .filter2 {
     flex: 0 0 auto;
