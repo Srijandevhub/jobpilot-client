@@ -38,6 +38,21 @@ input, button {
     color: #5E6670;
     margin-bottom: 16px;
 }
+.panel-heading, .panel-sub-heading {
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 10px;
+    color: #18191C;
+}
+.panel-sub-heading {
+    margin-top: 15px;
+    font-size: 15px;
+}
+.form-label {
+    font-size: 13px;
+    line-height: 13px;
+    color: #18191C;
+}
 @media only screen and (max-width: 991px) {
     body {
         font-size: 15px !important;
