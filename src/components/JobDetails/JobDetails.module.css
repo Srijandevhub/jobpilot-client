@@ -108,6 +108,13 @@
     color: var(--dark-color);
     font-weight: 500;
 }
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
 @media only screen and (max-width: 1199px) {
     .btns {
         width: 100%;
