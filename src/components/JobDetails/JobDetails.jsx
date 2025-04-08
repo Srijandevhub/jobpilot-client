@@ -1,13 +1,60 @@
-import { Col, Modal, ModalBody, ModalHeader, Row } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
 import Facebook from '../../assets/facebook.svg'
 import styles from './JobDetails.module.css'
 import Bookmark from '../../assets/bookmarkblue.svg'
 import Add from '../../assets/add.svg'
+import { useEffect, useState } from "react"
 
-const JobDetails = ({ show, close }) => {
+const JobDetails = () => {
+    const [fixed, setFixed] = useState(false);
+    const handleScroll = () => {
+        if (window.scrollY > 100) {
+            setFixed(true);
+        } else {
+            setFixed(false);
+        }
+    }
+    useEffect(() => {
+        document.addEventListener('scroll', handleScroll);
+        return () => document.removeEventListener('scroll', handleScroll);
+    }, []);
     return (
-        <Modal show={show} onHide={close} dialogClassName="modal-xl" scrollable>
-            <ModalHeader>
+        <>
+        {
+            fixed &&
+            <div className={`p-3 ${styles.fixed} bg-light-subtle shadow`}>
+                <Container>
+                    <div className="d-flex align-items-center justify-content-between w-100" style={{ flexWrap: 'wrap' }}>
+                        <div className={styles.media}>
+                            <i className={styles.icon}>
+                                <img src={Facebook} alt="facebook"/>
+                            </i>
+                            <div className={styles.body}>
+                                <h2 className={styles.heading}>Senior UX Designer</h2>
+                                <span className={styles.action}>at Facebook</span>
+                            </div>
+                        </div>
+                        <ul className={`d-flex align-items-center ${styles.btns}`}>
+                            <li>
+                                <button className={styles.saveBtn}>
+                                    <img src={Bookmark} alt="bookmark"/>
+                                </button>
+                            </li>
+                            <li>
+                                <button className={styles.btn}>
+                                    Apply now
+                                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </Container>
+            </div>
+        }
+        <div className="container">
+            <div className="p-3">
                 <div className="d-flex align-items-center justify-content-between w-100" style={{ flexWrap: 'wrap' }}>
                     <div className={styles.media}>
                         <i className={styles.icon}>
@@ -34,8 +81,8 @@ const JobDetails = ({ show, close }) => {
                         </li>
                     </ul>
                 </div>
-            </ModalHeader>
-            <ModalBody>
+            </div>
+            <div className="p-3">
                 <div className="content">
                     <h4>Job Description</h4>
                     <p>Velstar is a Shopify Plus agency, and we partner with brands to help them grow, we also do the same with our people!</p>
@@ -92,7 +139,7 @@ const JobDetails = ({ show, close }) => {
                         </div>
                     </div>
                 </div>
-                <h4 className={styles.bxHeading}>Job Description</h4>
+                {/* <h4 className={styles.bxHeading}>Job Description</h4> */}
                 <Row>
                     <Col lg={4} md={6} sm={6} xs={6}>
                         <p className={styles.action}>Job Posted:</p>
@@ -119,8 +166,9 @@ const JobDetails = ({ show, close }) => {
                         <p className={styles.fs2}>Full Time</p>
                     </Col>
                 </Row>
-            </ModalBody>
-        </Modal>
+            </div>
+        </div>
+        </>
     )
 }
 
