@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom'
 import Logo from '../../assets/logo.svg'
 import Search from '../../assets/fi_search.svg'
 import { useState } from 'react'
-import AuthModal from '../Auth/AuthModal'
 
-const MainHeader = ({ menuActive = 'home' }) => {
+const MainHeader = ({ menuActive = 'home', panel = false }) => {
     const [showMenu, setShowMenu] = useState(false);
     return (
         <>
@@ -23,6 +22,10 @@ const MainHeader = ({ menuActive = 'home' }) => {
                         <li>
                             <Link to="/explore-companies" className={`${styles.headerLink} ${menuActive === 'explorecompanies' ? `${styles.active}` : ''}`}>Explore Companies</Link>
                         </li>
+                        {/* this part for super admin and company admins and recruiters */}
+                        <li>
+                            <Link to="/dashboard/overview" className={`${styles.headerLink} ${menuActive === 'dashboard' ? `${styles.active}` : ''}`}>Dashboard</Link>
+                        </li>
                     </ul>
                 </Container>
             </div>
@@ -32,14 +35,17 @@ const MainHeader = ({ menuActive = 'home' }) => {
                         <span className={styles.brand}>
                             <img src={Logo} alt='logo'/>
                         </span>
-                        <div className={styles.search}>
-                            <div className='position-relative'>
-                                <i className={styles.searchIcon}>
-                                    <img src={Search} alt='search'/>
-                                </i>
-                                <input type='text' className={styles.input} id='searchjob' placeholder='Job tittle, keyword, company'/>
+                        {
+                            !panel &&
+                            <div className={styles.search}>
+                                <div className='position-relative'>
+                                    <i className={styles.searchIcon}>
+                                        <img src={Search} alt='search'/>
+                                    </i>
+                                    <input type='text' className={styles.input} id='searchjob' placeholder='Job tittle, keyword, company'/>
+                                </div>
                             </div>
-                        </div>
+                        }
                         <div className={`flex-grow-1 ${styles.btnholder}`}>
                             <div className='d-flex justify-content-end gap-1'>
                                 <Link to="/signin" className={styles.btn}>Sign In</Link>
