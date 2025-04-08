@@ -1,10 +1,11 @@
 import styles from './JobBox.module.css'
 import Google from '../../assets/google.svg'
 import Bookmark from '../../assets/bookmark.svg'
+import { Link } from 'react-router-dom'
 
-const JobBox = ({ onClick }) => {
+const JobBox = () => {
     return (
-        <div className={styles.wrapper} onClick={onClick}>
+        <div className={styles.wrapper}>
             <h5 className={styles.heading}>Techical Support Specialist</h5>
             <div className='d-flex align-items-center mb-4'>
                 <span className={styles.tag}>Part Time</span>
@@ -22,6 +23,7 @@ const JobBox = ({ onClick }) => {
                     <img src={Bookmark} alt='bookmark'/>
                 </button>
             </div>
+            <Link to="/job-details" className={styles.blk}></Link>
         </div>
     )
 }
