@@ -4,11 +4,9 @@ import Search from '../../assets/fi_search.svg'
 import MapPin from '../../assets/fi_map-pin.svg'
 import { useState } from 'react'
 import JobBox from '../JobBox/JobBox'
-import JobDetails from '../JobDetails/JobDetails'
 
 const JobListing = () => {
     const [showFilters, setShowFilters] = useState(false);
-    const [showDetailsModal, setShowDetailsModal] = useState(false);
     return (
         <div className={styles.wrapper}>
             <Container>
@@ -35,16 +33,16 @@ const JobListing = () => {
                 </div>
                 <Row>
                     <Col md={6} xl={4}>
-                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                        <JobBox />
                     </Col>
                     <Col md={6} xl={4}>
-                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                        <JobBox />
                     </Col>
                     <Col md={6} xl={4}>
-                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                        <JobBox />
                     </Col>
                     <Col md={6} xl={4}>
-                        <JobBox onClick={() => setShowDetailsModal(true)}/>
+                        <JobBox />
                     </Col>
                 </Row>
             </Container>
@@ -70,7 +68,6 @@ const JobListing = () => {
                     </CardFooter>
                 </Card>
             </aside>
-            <JobDetails show={showDetailsModal} close={() => setShowDetailsModal(false)}/>
         </div>
     )
 }
