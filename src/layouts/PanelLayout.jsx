@@ -1,4 +1,4 @@
-import { Card, Col, Container, Row } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
 import MainHeader from "../components/MainHeader/MainHeader"
 import PanelSidebar from "../components/PanelSidebar/PanelSidebar"
 
