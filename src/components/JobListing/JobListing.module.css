@@ -131,7 +131,7 @@
         width: 36%;
     }
 }
-@media only screen and (max-width: 1399px) {
+@media only screen and (max-width: 1199px) {
     .filter1, .filter2, .filter3 {
         width: 100%;
     }

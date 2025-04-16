@@ -25,6 +25,7 @@
     border-left: 4px solid transparent;
     transition: 0.4s ease-in-out;
     text-transform: uppercase;
+    border-radius: 3px 0 0 3px;
 }
 .btn.active {
     font-weight: 600;

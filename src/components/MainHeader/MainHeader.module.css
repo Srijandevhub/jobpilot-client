@@ -24,6 +24,10 @@
     color: #5E6670;
     text-decoration: none;
     transition: 0.3s ease-in-out;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0px;
 }
 .headerLink:hover {
     color: var(--main-color);
@@ -118,6 +122,20 @@
 }
 .mobileNav.show {
     left: 0;
+}
+.welcome {
+    margin: 0;
+    font-size: 11px;
+    line-height: 11px;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+.username {
+    margin: 0;
+    font-size: 13px;
+    line-height: 13px;
+    color: var(--main-color);
+    font-weight: 700;
 }
 @media only screen and (max-width: 991px) {
     .navbarToogler {

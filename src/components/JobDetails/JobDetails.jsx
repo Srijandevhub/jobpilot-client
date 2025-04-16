@@ -16,6 +16,7 @@ const JobDetails = () => {
     }
     useEffect(() => {
         document.addEventListener('scroll', handleScroll);
+        window.scrollTo(0, 0);
         return () => document.removeEventListener('scroll', handleScroll);
     }, []);
     return (

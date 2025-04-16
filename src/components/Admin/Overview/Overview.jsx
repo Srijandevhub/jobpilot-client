@@ -1,10 +1,12 @@
 import { Col, Row } from 'react-bootstrap'
 import styles from './Overview.module.css'
+import { useSelector } from 'react-redux'
 
 const Overview = () => {
+    const user = useSelector((state) => state.user);
     return (
         <>
-            <h1 className={styles.welcome}>Hello, John Doe</h1>
+            <h1 className={styles.welcome}>Hello, {user?.data?.fullname}</h1>
             <p className={styles.text}>Here is you daily activities and applications</p>
             <Row>
                 <Col lg={4}>

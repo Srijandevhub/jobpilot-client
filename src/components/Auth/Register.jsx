@@ -2,9 +2,12 @@ import { Col, Row } from "react-bootstrap"
 import Illustration from '../../assets/Illustration.svg'
 import styles from './Auth.module.css'
 import Logo from '../../assets/logo.svg'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import InputGroup from "../Inputs/InputGroup"
 import { useState } from "react"
+import { Flip, toast } from "react-toastify"
+import axios from "axios"
+import { baseUrl } from "../../url"
 
 const Register = () => {
     const [fullname, setFullname] = useState("");
@@ -12,6 +15,52 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
+    const [disable, setDisable] = useState(false);
+    const navigate = useNavigate();
+
+    const handleRegister = async () => {
+        try {
+            setDisable(true);
+            const res = await axios.post(`${baseUrl}/api/v1/user/register`, {
+                fullname,
+                username,
+                email,
+                password,
+                confirmpassword
+            });
+            toast.success(res.data.message, {
+                position: 'top-center',
+                progress: false,
+                pauseOnHover:  false,
+                pauseOnFocusLoss: false,
+                transition: Flip,
+                onClose: () => navigate("/signin")
+            })
+        } catch (error) {
+            if (error.status === 500) {
+                toast.error(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.warn(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            }
+        } finally {
+            setDisable(false);
+        }
+    }
+
     return (
         <Row className="m-0">
             <Col className="p-0" lg={6}>
@@ -34,7 +83,7 @@ const Register = () => {
                             <InputGroup type={'email'} id={"email"} value={email} onChange={(val) => setEmail(val)} placeholder={"Email address"}/>
                             <InputGroup type={"password"} id={"password"} value={password} onChange={(val) => setPassword(val)} placeholder={"Password"}/>
                             <InputGroup type={"password"} id={"confirmpassword"} value={confirmpassword} onChange={(val) => setConfirmpassword(val)} placeholder={"Confirm Password"}/>
-                            <button className={styles.btn}>
+                            <button className={styles.btn} onClick={() => handleRegister()} disabled={disable}>
                                 Register
                                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
