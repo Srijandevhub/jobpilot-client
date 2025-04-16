@@ -13,7 +13,7 @@ import MyProfilePage from "./pages/MyProfilePage"
 import UserManagementPage from "./pages/UserManagementPage"
 import CompanyManagementPage from "./pages/CompanyManagementPage"
 import MyCompanyPage from "./pages/MyCompanyPage"
-import Protected from "./components/Admin/Protected/Protected"
+import Protected from "./components/Protected/Protected"
 
 const App = () => {
     const dispatch = useDispatch();
