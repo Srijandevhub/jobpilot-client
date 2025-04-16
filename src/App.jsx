@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import SignInPage from "./pages/SignInPage"
 import RegisterPage from "./pages/RegisterPage"
@@ -13,6 +13,7 @@ import MyProfilePage from "./pages/MyProfilePage"
 import UserManagementPage from "./pages/UserManagementPage"
 import CompanyManagementPage from "./pages/CompanyManagementPage"
 import MyCompanyPage from "./pages/MyCompanyPage"
+import Protected from "./components/Admin/Protected/Protected"
 
 const App = () => {
     const dispatch = useDispatch();
@@ -27,12 +28,12 @@ const App = () => {
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/find-job" element={<FindJobPage />}/>
             <Route path="/job-details" element={<JobDetailsPage />}/>
-            <Route path="/dashboard/overview" element={<OverviewPage />}/>
-            <Route path="/dashboard/postjob" element={<PostJobPage />}/>
-            <Route path="/dashboard/myprofile" element={<MyProfilePage />}/>
-            <Route path="/dashboard/usermanagement" element={<UserManagementPage />}/>
-            <Route path="/dashboard/companymanagement" element={<CompanyManagementPage />}/>
-            <Route path="/dashboard/mycompany" element={<MyCompanyPage />}/>
+            <Route path="/dashboard/overview" element={<Protected><OverviewPage /></Protected>}/>
+            <Route path="/dashboard/postjob" element={<Protected><PostJobPage /></Protected>}/>
+            <Route path="/dashboard/myprofile" element={<Protected><MyProfilePage /></Protected>}/>
+            <Route path="/dashboard/usermanagement" element={<Protected><UserManagementPage /></Protected>}/>
+            <Route path="/dashboard/companymanagement" element={<Protected><CompanyManagementPage /></Protected>}/>
+            <Route path="/dashboard/mycompany" element={<Protected><MyCompanyPage /></Protected>}/>
         </Routes>
     )
 }
