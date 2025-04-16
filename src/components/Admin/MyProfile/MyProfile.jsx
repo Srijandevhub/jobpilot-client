@@ -6,6 +6,7 @@ import { Flip, toast } from "react-toastify";
 import axios from "axios";
 import { baseUrl } from "../../../url";
 import { updateuser } from "../../../utils/userSlice";
+import { Link } from "react-router-dom";
 
 const MyProfile = () => {
     const user = useSelector((state) => state.user.data);
@@ -138,6 +139,116 @@ const MyProfile = () => {
         }
     }
 
+    const handleMultipleResumes = async (e) => {
+        try {
+            const formdata = new FormData();
+            const files = e.target.files;
+            console.log(files);
+            for (let i = 0; i < files.length; i++) {
+                formdata.append("resumes", files[i]);
+            }
+            const res = await axios.post(`${baseUrl}/api/v1/resume/`, formdata, {
+                withCredentials: true
+            });
+            toast.success(res.data.message, {
+                position: 'top-center',
+                progress: false,
+                pauseOnHover:  false,
+                pauseOnFocusLoss: false,
+                transition: Flip
+            })
+        } catch (error) {
+            if (error.status === 500) {
+                toast.error(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.warn(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            }
+        } finally {
+            e.target.value = null;
+            setRefresh(!refresh);
+        }
+    }
+
+    const [refresh, setRefresh] = useState(false);
+    const [resumes, setResumes] = useState([]);
+    useEffect(() => {
+        const fetchresume = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/api/v1/resume/`, { withCredentials: true });
+                setResumes(res.data.resumes);
+            } catch (error) {
+                if (error.status === 500) {
+                    toast.error(error.response.data.message, {
+                        position: 'top-center',
+                        progress: false,
+                        pauseOnHover:  false,
+                        pauseOnFocusLoss: false,
+                        transition: Flip,
+                        hideProgressBar: true
+                    });
+                } else {
+                    toast.warn(error.response.data.message, {
+                        position: 'top-center',
+                        progress: false,
+                        pauseOnHover:  false,
+                        pauseOnFocusLoss: false,
+                        transition: Flip,
+                        hideProgressBar: true
+                    });
+                }
+            }
+        }
+        fetchresume();
+    }, [refresh])
+
+    const handleDeleteResume = async (id) => {
+        try {
+            const res = await axios.delete(`${baseUrl}/api/v1/resume/${id}`, { withCredentials: true });
+            toast.success(res.data.message, {
+                position: 'top-center',
+                progress: false,
+                pauseOnHover:  false,
+                pauseOnFocusLoss: false,
+                transition: Flip
+            })
+            setRefresh(!refresh);
+        } catch (error) {
+            if (error.status === 500) {
+                toast.error(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.warn(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            }
+        }
+    }
+
     return (
         <Row>
             <Col md={3}>
@@ -145,6 +256,39 @@ const MyProfile = () => {
                     <img src={profilepicture} alt="profile"/>
                     <input type="file" accept="image/*" onChange={(e) => handleUpdateProfilePicture(e)}/>
                 </div>
+                <div className={styles.resumeupload}>
+                    <i>
+                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/>
+                        </svg>
+                    </i>
+                    <h6>Upload Your Resume</h6>
+                    <input type="file" className={styles.inp} multiple title="" onChange={(e) => handleMultipleResumes(e)}/>
+                </div>
+                {
+                    resumes.map((resume, index) => {
+                        const getDate = (val) => {
+                            const curr = new Date(val);
+                            const date = String(curr.getDate()).padStart(2, "0");
+                            const month = String(curr.getMonth() + 1).padStart(2, '0');
+                            const year = curr.getFullYear();
+                            return `${date}/${month}/${year}`;
+                        }
+                        return (
+                            <div key={index} className={styles.resumeBx}>
+                                <div className={styles.content}>
+                                    <h5 className={styles.title}><Link to={resume.url} target="_blank" download={true}>{resume.publicid}</Link></h5>
+                                    <span className={styles.date}>Uploaded: {getDate(resume.createdAt)}</span>
+                                </div>
+                                <button className={`${styles.delBtn} text-danger`} aria-label="delete" onClick={() => handleDeleteResume(resume._id)}>
+                                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        )
+                    })
+                }
             </Col>
             <Col md={9}>
                 <h3 className="h6">Personal Info:-</h3>
@@ -240,7 +384,9 @@ const MyProfile = () => {
                         <FormControl type="text" value={zipcode} onChange={(e) => setZipcode(e.target.value)}/>
                     </Col>
                 </Row>
-                <button className="btn btn-primary mt-2" onClick={() => handleUpdateProfile()}>Save</button>
+                <div className="d-flex justify-content-end">
+                    <button className={`mt-2 ${styles.btn}`} onClick={() => handleUpdateProfile()}>Save</button>
+                </div>
             </Col>
         </Row>
     )
