@@ -1,0 +1,32 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 47px !important;
+    background-color: #fff;
+    padding: 40px 0px 20px !important;
+}
+.heading {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--dark-color);
+}
+.panelMenu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex-grow: 1;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    color: var(--dark-color);
+    gap: 10px;
+    text-decoration: none;
+}
+.btn.active {
+    background-color: var(--main-color);
+    color: #fff;
+}
