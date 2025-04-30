@@ -14,6 +14,7 @@ import UserManagementPage from "./pages/UserManagementPage"
 import CompanyManagementPage from "./pages/CompanyManagementPage"
 import MyCompanyPage from "./pages/MyCompanyPage"
 import Protected from "./components/Protected/Protected"
+import AllJobsPage from "./pages/AllJobsPage"
 
 const App = () => {
     const dispatch = useDispatch();
@@ -27,13 +28,14 @@ const App = () => {
             <Route path="/signin" element={<SignInPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/find-job" element={<FindJobPage />}/>
-            <Route path="/job-details" element={<JobDetailsPage />}/>
+            <Route path="/job-details/:id" element={<JobDetailsPage />}/>
             <Route path="/dashboard/overview" element={<Protected><OverviewPage /></Protected>}/>
             <Route path="/dashboard/postjob" element={<Protected><PostJobPage /></Protected>}/>
             <Route path="/dashboard/myprofile" element={<Protected><MyProfilePage /></Protected>}/>
             <Route path="/dashboard/usermanagement" element={<Protected><UserManagementPage /></Protected>}/>
             <Route path="/dashboard/companymanagement" element={<Protected><CompanyManagementPage /></Protected>}/>
             <Route path="/dashboard/mycompany" element={<Protected><MyCompanyPage /></Protected>}/>
+            <Route path="/dashboard/jobs" element={<Protected><AllJobsPage /></Protected>}/>
         </Routes>
     )
 }
