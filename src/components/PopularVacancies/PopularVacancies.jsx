@@ -28,7 +28,7 @@ const PopularVacancies = () => {
                             return (
                                 <Col xl={3} md={4} sm={6} key={index}>
                                     <div className={styles.bx}>
-                                        <Link to={`/`} className={styles.link}>{item.title}</Link>
+                                        <Link to={`/find-job?jobrole=${item.jobroleid}`} className={styles.link}>{item.title}</Link>
                                         <span className={styles.action}>{item.openings} Open Positions</span>
                                     </div>
                                 </Col>

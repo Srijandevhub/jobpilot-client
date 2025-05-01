@@ -10,55 +10,55 @@ import { useSearchParams } from 'react-router-dom'
 
 const JobListing = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const categoryids = searchParams.get("category");
-    const jobroleids = searchParams.get("jobrole");
-    const updateCategoryQuery = (id) => {
-        const currentParams = Object.fromEntries([...searchParams]);
-        let allcategories = categoryids ? categoryids.split(",") : [];
-        const idpresent = allcategories.includes(id);
-        if (!idpresent) {
-            allcategories.push(id);
-        } else {
-            const updated = allcategories.filter(item => item !== id);
-            allcategories.length = 0;
-            Array.prototype.push.apply(allcategories, updated);
-        }
-        setSearchParams({ ...currentParams, category: allcategories.join(",") });
-    }
-    const updateJobroleQuery = (id) => {
-        const currentParams = Object.fromEntries([...searchParams]);
-        let alljobroles = jobroleids ? jobroleids.split(",") : [];
-        const idpresent = alljobroles.includes(id);
-        if (!idpresent) {
-            alljobroles.push(id);
-        } else {
-            const updated = alljobroles.filter(item => item !== id);
-            alljobroles.length = 0;
-            Array.prototype.push.apply(alljobroles, updated);
-        }
-        setSearchParams({ ...currentParams, jobrole: alljobroles.join(",") });
-    }
+    // const categoryids = searchParams.get("category");
+    // const jobroleids = searchParams.get("jobrole");
+    // const updateCategoryQuery = (id) => {
+    //     const currentParams = Object.fromEntries([...searchParams]);
+    //     let allcategories = categoryids ? categoryids.split(",") : [];
+    //     const idpresent = allcategories.includes(id);
+    //     if (!idpresent) {
+    //         allcategories.push(id);
+    //     } else {
+    //         const updated = allcategories.filter(item => item !== id);
+    //         allcategories.length = 0;
+    //         Array.prototype.push.apply(allcategories, updated);
+    //     }
+    //     setSearchParams({ ...currentParams, category: allcategories.join(",") });
+    // }
+    // const updateJobroleQuery = (id) => {
+    //     const currentParams = Object.fromEntries([...searchParams]);
+    //     let alljobroles = jobroleids ? jobroleids.split(",") : [];
+    //     const idpresent = alljobroles.includes(id);
+    //     if (!idpresent) {
+    //         alljobroles.push(id);
+    //     } else {
+    //         const updated = alljobroles.filter(item => item !== id);
+    //         alljobroles.length = 0;
+    //         Array.prototype.push.apply(alljobroles, updated);
+    //     }
+    //     setSearchParams({ ...currentParams, jobrole: alljobroles.join(",") });
+    // }
 
     const [showFilters, setShowFilters] = useState(false);
     const [jobs, setJobs] = useState([]);
     const [categories, setCategories] = useState([]);
     const [jobroles, setJobroles] = useState([]);
-    useEffect(() => {
-        const fetchJobs = async () => {
-            try {
-                const res = await axios.get(`${baseUrl}/api/v1/public/jobs`, {
-                    params: {
-                        category: categoryids,
-                        jobrole: jobroleids
-                    }
-                });
-                setJobs(res.data.jobs);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchJobs();
-    }, [categoryids, jobroleids])
+    // useEffect(() => {
+    //     const fetchJobs = async () => {
+    //         try {
+    //             const res = await axios.get(`${baseUrl}/api/v1/public/jobs`, {
+    //                 params: {
+    //                     category: categoryids,
+    //                     jobrole: jobroleids
+    //                 }
+    //             });
+    //             setJobs(res.data.jobs);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     fetchJobs();
+    // }, [categoryids, jobroleids])
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -79,13 +79,58 @@ const JobListing = () => {
         }
         fetchJobroles();
     }, [])
+
+
+
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedJobRoles, setSelectedJobRoles] = useState([]);
+    useEffect(() => {
+        const categoryFromParams = searchParams.get("category")?.split(",") || [];
+        const jobRolesFromParams = searchParams.get("category")?.split(",") || [];
+        setSelectedCategories(categoryFromParams);
+        setSelectedJobRoles(jobRolesFromParams);
+    }, [])
+    const toggleCategory = (id) => {
+        setSelectedCategories(prev =>
+            prev.includes(id) ? prev.filter(cid => cid !== id) : [...prev, id]
+        );
+    };
+    const toggleJobrole = (id) => {
+        setSelectedJobRoles(prev =>
+            prev.includes(id) ? prev.filter(jid => jid !== id) : [...prev, id]
+        );
+    };
+
+    const [query, setQuery] = useState("");
+
+    useEffect(() => {
+        const categoryids = searchParams.get("category");
+        const jobroleids = searchParams.get("jobrole");
+        const queryParam = searchParams.get("q");
+        const fetchJobs = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/api/v1/public/jobs`, {
+                    params: {
+                        category: categoryids,
+                        jobrole: jobroleids,
+                        query: queryParam
+                    }
+                });
+                setJobs(res.data.jobs);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchJobs();
+    }, [searchParams])
+
     return (
         <div className={styles.wrapper}>
             <Container>
                 <div className={styles.filterBx}>
                     <div className={styles.filter1}>
                         <i className={styles.icon}><img src={Search} alt='search'/></i>
-                        <input type='text' className={styles.control} placeholder='Job tittle, Keyword...'/>
+                        <input type='text' className={styles.control} placeholder='Job tittle, Keyword...' value={query} onChange={(e) => setQuery(e.target.value)}/>
                     </div>
                     <div className={styles.filter2}>
                         <i className={styles.icon}><img src={MapPin} alt='search'/></i>
@@ -99,7 +144,15 @@ const JobListing = () => {
                                 </svg>
                                 Filter
                             </button>
-                            <button className={styles.btn}>Find Job</button>
+                            <button className={styles.btn} onClick={() => {
+                                const currentParams = Object.fromEntries([...searchParams]);
+                                if (query.length > 0) {
+                                    currentParams.q = query;
+                                } else {
+                                    delete currentParams.q;
+                                }
+                                setSearchParams(currentParams);
+                            }}>Find Job</button>
                         </div>
                     </div>
                 </div>
@@ -131,21 +184,33 @@ const JobListing = () => {
                         <h6 className={styles.hd}>Categories</h6>
                         {
                             categories.map((item, index) => {
-                                return <button className={`${styles.filterBtn} ${categoryids?.split(",").includes(item._id) ? `${styles.active}` : ''}`} onClick={() => updateCategoryQuery(item._id)} key={index}>{item.title}</button>
+                                return <button className={`${styles.filterBtn} ${selectedCategories?.includes(item._id) ? `${styles.active}` : ''}`} onClick={() => toggleCategory(item._id)} key={index}>{item.title}</button>
                             })
                         }
                         <h6 className={styles.hd}>Job Roles</h6>
                         {
                             jobroles.map((item, index) => {
-                                return <button className={`${styles.filterBtn} ${jobroleids?.split(",").includes(item._id) ? `${styles.active}` : ''}`} key={index} onClick={() => updateJobroleQuery(item._id)}>{item.title}</button>
+                                return <button className={`${styles.filterBtn} ${selectedJobRoles?.includes(item._id) ? `${styles.active}` : ''}`} key={index} onClick={() => toggleJobrole(item._id)}>{item.title}</button>
                             })
                         }
-                        {/* <h6 className={styles.hd}>Job Type</h6>
-                        <h6 className={styles.hd}>Salary</h6> */}
                     </CardBody>
-                    {/* <CardFooter>
-                        <button className={`w-100 ${styles.btn} m-0`}>Apply Filter</button>
-                    </CardFooter> */}
+                    <CardFooter>
+                        <button className={`w-100 ${styles.btn} m-0`} onClick={() => {
+                            const currentParams = Object.fromEntries([...searchParams]);
+                            if (selectedCategories.length > 0) {
+                                currentParams.category = selectedCategories.join(",");
+                            } else {
+                                delete currentParams.category;
+                            }
+                            if (selectedJobRoles.length > 0) {
+                                currentParams.jobrole = selectedJobRoles.join(",");
+                            } else {
+                                delete currentParams.jobrole;
+                            }
+                            setSearchParams(currentParams);
+                            setShowFilters(false);
+                        }}>Apply Filter</button>
+                    </CardFooter>
                 </Card>
             </aside>
         </div>
