@@ -86,9 +86,11 @@ const JobListing = () => {
     const [selectedJobRoles, setSelectedJobRoles] = useState([]);
     useEffect(() => {
         const categoryFromParams = searchParams.get("category")?.split(",") || [];
-        const jobRolesFromParams = searchParams.get("category")?.split(",") || [];
+        const jobRolesFromParams = searchParams.get("jobrole")?.split(",") || [];
+        const queryFromParams = searchParams.get("q") || '';
         setSelectedCategories(categoryFromParams);
         setSelectedJobRoles(jobRolesFromParams);
+        setQuery(queryFromParams);
     }, [])
     const toggleCategory = (id) => {
         setSelectedCategories(prev =>
