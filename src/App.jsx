@@ -15,6 +15,8 @@ import CompanyManagementPage from "./pages/CompanyManagementPage"
 import MyCompanyPage from "./pages/MyCompanyPage"
 import Protected from "./components/Protected/Protected"
 import AllJobsPage from "./pages/AllJobsPage"
+import ExploreCompaniesPage from "./pages/ExploreCompaniesPage"
+import CompanyDetailsPage from "./pages/CompanyDetailsPage"
 
 const App = () => {
     const dispatch = useDispatch();
@@ -28,7 +30,9 @@ const App = () => {
             <Route path="/signin" element={<SignInPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/find-job" element={<FindJobPage />}/>
+            <Route path="/explore-companies" element={<ExploreCompaniesPage />}/>
             <Route path="/job-details/:id" element={<JobDetailsPage />}/>
+            <Route path="/company-details/:id" element={<CompanyDetailsPage />}/>
             <Route path="/dashboard/overview" element={<Protected><OverviewPage /></Protected>}/>
             <Route path="/dashboard/postjob" element={<Protected><PostJobPage /></Protected>}/>
             <Route path="/dashboard/myprofile" element={<Protected><MyProfilePage /></Protected>}/>
