@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './CompanyDetails.module.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../../url';
 import axios from 'axios';
 import { Col, Row } from 'react-bootstrap';
@@ -10,15 +10,18 @@ const months = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ]
 const CompanyDetails = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [data, setData] = useState(null);
     useEffect(() => {
         const fetchCompanyDetails = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/api/v1/public/company/${id}`);
-                console.log(res.data);
                 setData(res.data);
             } catch (error) {
+                if (error.status === 404) {
+                    navigate("/find-job");
+                }
                 console.log(error);
             }
         }
