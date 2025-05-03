@@ -54,6 +54,11 @@ input, button {
     line-height: 13px;
     color: #18191C;
 }
+#applyModal .modal-header {
+    color: #18191C;
+    font-size: 14px;
+    font-weight: 500;
+}
 @media only screen and (max-width: 991px) {
     body {
         font-size: 15px !important;
