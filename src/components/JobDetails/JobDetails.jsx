@@ -1,4 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap"
+import { Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "react-bootstrap"
 import styles from './JobDetails.module.css'
 import Bookmark from '../../assets/bookmarkblue.svg'
 import Add from '../../assets/add.svg'
@@ -6,12 +6,15 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { baseUrl } from "../../url"
+import { useSelector } from "react-redux"
+import { Flip, toast } from "react-toastify"
 
 const months = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ]
 
 const JobDetails = () => {
+    const user = useSelector((state) => state.user);
     const { id } = useParams();
     const [fixed, setFixed] = useState(false);
     const [data, setData] = useState(null);
@@ -31,13 +34,31 @@ const JobDetails = () => {
                 const res = await axios.get(`${baseUrl}/api/v1/public/job/${id}`);
                 setData(res.data.job);
             } catch (error) {
-                navigate("/")
+                if (error.status === 404) {
+                    navigate("/find-job");
+                }
+                console.log(error);
             }
         }
         fetchJob();
         return () => document.removeEventListener('scroll', handleScroll);
     }, []);
-
+    useEffect(() => {
+        const fetchResumes = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/api/v1/user/resumes`, { withCredentials: true });
+                setResumes(res.data.resumes);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        if (user?.data) {
+            fetchResumes();
+            if (user.data.appliedjobids) {
+                setApplied()
+            }
+        }
+    }, [user])
     const getDate = (input) => {
         const curr = new Date(input);
         const month = curr.getMonth();
@@ -45,12 +66,81 @@ const JobDetails = () => {
         const date = String(curr.getDate()).padStart(2, '0');
         return `${date} ${months[month]}, ${year}`;
     }
+    const [showModal, setShowModal] = useState(false);
+    const [resumes, setResumes] = useState([]);
+    const [resumeid, setResumeid] = useState("none");
+    const [coverletter, setCoverletter] = useState("");
+
+    const [applied, setApplied] = useState(false);
+
+    const handleApply = async () => {
+        try {
+            const res = await axios.post(`${baseUrl}/api/v1/application`, {
+                jobid: id,
+                resumelink: resumeid,
+                coverletter
+            }, { withCredentials: true });
+            toast.success(res.data.message, {
+                position: 'top-center',
+                progress: false,
+                pauseOnHover:  false,
+                pauseOnFocusLoss: false,
+                transition: Flip
+            });
+            setResumeid("none");
+            setCoverletter("");
+            setApplied(true);
+        } catch (error) {
+            if (error.status === 500) {
+                toast.error(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.warn(error.response.data.message, {
+                    position: 'top-center',
+                    progress: false,
+                    pauseOnHover:  false,
+                    pauseOnFocusLoss: false,
+                    transition: Flip,
+                    hideProgressBar: true
+                });
+            }
+        } finally {
+            setShowModal(false);
+        }
+    }
 
     return (
         <>
             {
                 data ?
                 <>
+                <Modal centered show={showModal} onHide={() => setShowModal(false)} id="applyModal">
+                    <ModalHeader closeButton>
+                        Apply Job: {data.job.title}
+                    </ModalHeader>
+                    <ModalBody>
+                        <label className="form-label">Resumes</label>
+                        <select className="form-select" value={resumeid} onChange={(e) => setResumeid(e.target.value)}>
+                            <option value="none">--Select--</option>
+                            {
+                                resumes.map((item, index) => {
+                                    return <option key={index} value={item._id}>{item.publicid}</option>
+                                })
+                            }
+                        </select>
+                        <label className="form-label">Coverletter</label>
+                        <textarea className="form-control" value={coverletter} onChange={(e) => setCoverletter(e.target.value)}></textarea>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className="btn btn-danger" onClick={() => handleApply()}>Apply</button>
+                    </ModalFooter>
+                </Modal>
                 {
                     fixed &&
                     <div className={`p-3 ${styles.fixed} bg-light-subtle shadow`}>
@@ -72,11 +162,23 @@ const JobDetails = () => {
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={styles.btn}>
-                                            Apply now
-                                            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-                                            </svg>
+                                        <button className={styles.btn} onClick={() => {
+                                            if (!user?.data) {
+                                                navigate("/signin");
+                                            }
+                                            setShowModal(true);
+                                        }}>
+                                            {
+                                                applied ?
+                                                "Applied"
+                                                :
+                                                <>
+                                                Apply now
+                                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+                                                </svg>
+                                                </>
+                                            }
                                         </button>
                                     </li>
                                 </ul>
@@ -103,7 +205,12 @@ const JobDetails = () => {
                                     </button>
                                 </li>
                                 <li>
-                                    <button className={styles.btn}>
+                                    <button className={styles.btn} onClick={() => {
+                                        if (!user?.data) {
+                                            navigate("/signin");
+                                        }
+                                        setShowModal(true);
+                                    }}>
                                         Apply now
                                         <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
