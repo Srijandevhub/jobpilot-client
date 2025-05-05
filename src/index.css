@@ -59,6 +59,9 @@ input, button {
     font-size: 14px;
     font-weight: 500;
 }
+tr {
+    vertical-align: middle;
+}
 @media only screen and (max-width: 991px) {
     body {
         font-size: 15px !important;
