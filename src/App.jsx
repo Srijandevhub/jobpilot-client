@@ -17,6 +17,7 @@ import Protected from "./components/Protected/Protected"
 import AllJobsPage from "./pages/AllJobsPage"
 import ExploreCompaniesPage from "./pages/ExploreCompaniesPage"
 import CompanyDetailsPage from "./pages/CompanyDetailsPage"
+import ApplicationsPage from "./pages/ApplicationsPage"
 
 const App = () => {
     const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/dashboard/companymanagement" element={<Protected><CompanyManagementPage /></Protected>}/>
             <Route path="/dashboard/mycompany" element={<Protected><MyCompanyPage /></Protected>}/>
             <Route path="/dashboard/jobs" element={<Protected><AllJobsPage /></Protected>}/>
+            <Route path="/dashboard/applications/:id" element={<Protected><ApplicationsPage /></Protected>}/>
         </Routes>
     )
 }
