@@ -54,8 +54,8 @@ const JobDetails = () => {
         }
         if (user?.data) {
             fetchResumes();
-            if (user.data.appliedjobids) {
-                setApplied()
+            if (user.data.appliedjobids.includes(id)) {
+                setApplied(true);
             }
         }
     }, [user])
@@ -162,12 +162,12 @@ const JobDetails = () => {
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={styles.btn} onClick={() => {
+                                        <button className={`${styles.btn} ${applied ? 'disabled' : ""}`} onClick={() => {
                                             if (!user?.data) {
                                                 navigate("/signin");
                                             }
                                             setShowModal(true);
-                                        }}>
+                                        }} disabled={applied}>
                                             {
                                                 applied ?
                                                 "Applied"
@@ -205,16 +205,23 @@ const JobDetails = () => {
                                     </button>
                                 </li>
                                 <li>
-                                    <button className={styles.btn} onClick={() => {
+                                    <button className={`${styles.btn} ${applied ? 'disabled' : ""}`} onClick={() => {
                                         if (!user?.data) {
                                             navigate("/signin");
                                         }
                                         setShowModal(true);
-                                    }}>
-                                        Apply now
-                                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-                                        </svg>
+                                    }} disabled={applied}>
+                                        {
+                                            applied ?
+                                            "Applied"
+                                            :
+                                            <>
+                                            Apply now
+                                            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+                                            </svg>
+                                            </>
+                                        }
                                     </button>
                                 </li>
                             </ul>
