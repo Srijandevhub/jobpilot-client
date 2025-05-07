@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, FormControl, FormGroup, Row } from "react-bootstrap"
+import { Col, FormControl, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import styles from './MyProfile.module.css'
 import { Flip, toast } from "react-toastify";
@@ -51,6 +51,7 @@ const MyProfile = () => {
         setState(user?.address?.state);
         setZipcode(user?.address?.zipcode);
         setCountry(user?.address?.country);
+        setSelectedSkills(user?.skillids);
 
         setprofilepicture(user?.profilepicture || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541");
 
@@ -74,7 +75,8 @@ const MyProfile = () => {
                 city,
                 state,
                 country,
-                zipcode
+                zipcode,
+                skillids: JSON.stringify(selectedSkills)
             }, { withCredentials: true });
             dispatch(updateuser(res.data.user));
             toast.success(res.data.message, {
@@ -249,7 +251,39 @@ const MyProfile = () => {
         }
     }
 
+    const [skills, setSkills] = useState([]);
+    useEffect(() => {
+        const fetchSkills = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/api/v1/skill`, { withCredentials: true });
+                setSkills(res.data.skills);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchSkills();
+    }, [])
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    
+    const [skillModal, setSkillModal] = useState(false);
+
+    const [skillTitle, setSkillTitle] = useState("");
+    const handleAddSkill = async () => {
+        try {
+            const res = await axios.post(`${baseUrl}/api/v1/skill`, {
+                title: skillTitle
+            }, { withCredentials: true });
+            setSkills([...skillTitle, res.data.skill]);
+            setSkillTitle("");
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setSkillModal(false);
+        }
+    }
+
     return (
+        <>
         <Row>
             <Col md={3}>
                 <div className={styles.wrapper}>
@@ -384,11 +418,37 @@ const MyProfile = () => {
                         <FormControl type="text" value={zipcode} onChange={(e) => setZipcode(e.target.value)}/>
                     </Col>
                 </Row>
+                <h3 className="h6 mt-2">Skills:-</h3>
+                <select className="form-select mb-2 mt-2" multiple value={selectedSkills} onChange={(e) =>
+                    setSelectedSkills(
+                    Array.from(e.target.selectedOptions, (option) => option.value)
+                    )
+                }>
+                    {
+                        skills.map((skill, index) => {
+                            return <option key={index} value={skill._id}>{skill.title}</option>
+                        })
+                    }
+                </select>
+                <button className="btn btn-outline-dark" onClick={() => setSkillModal(true)}>Add New Skill</button>
                 <div className="d-flex justify-content-end">
                     <button className={`mt-2 ${styles.btn}`} onClick={() => handleUpdateProfile()}>Save</button>
                 </div>
             </Col>
         </Row>
+        <Modal id="skillModal" show={skillModal} onHide={() => setSkillModal(false)} centered>
+            <ModalHeader closeButton>
+                Skills
+            </ModalHeader>
+            <ModalBody>
+                <label className="form-label">Title*</label>
+                <input type="text" className="form-control" value={skillTitle} onChange={(e) => setSkillTitle(e.target.value)}/>
+            </ModalBody>
+            <ModalFooter>
+                <button className="btn btn-outline-danger" onClick={() => handleAddSkill()}>Add Skill</button>
+            </ModalFooter>
+        </Modal>
+        </>
     )
 }
 
