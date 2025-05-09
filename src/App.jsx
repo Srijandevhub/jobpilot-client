@@ -18,6 +18,7 @@ import AllJobsPage from "./pages/AllJobsPage"
 import ExploreCompaniesPage from "./pages/ExploreCompaniesPage"
 import CompanyDetailsPage from "./pages/CompanyDetailsPage"
 import ApplicationsPage from "./pages/ApplicationsPage"
+import AppliedJobsPage from "./pages/AppliedJobsPage"
 
 const App = () => {
     const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/dashboard/mycompany" element={<Protected><MyCompanyPage /></Protected>}/>
             <Route path="/dashboard/jobs" element={<Protected><AllJobsPage /></Protected>}/>
             <Route path="/dashboard/applications/:id" element={<Protected><ApplicationsPage /></Protected>}/>
+            <Route path="/dashboard/applied-jobs" element={<Protected><AppliedJobsPage /></Protected>}/>
         </Routes>
     )
 }

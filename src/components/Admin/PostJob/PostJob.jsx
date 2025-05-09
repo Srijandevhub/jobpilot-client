@@ -36,7 +36,8 @@ const PostJob = () => {
                 education,
                 jobdescription,
                 categoryid: category,
-                jobroleid: jobrole
+                jobroleid: jobrole,
+                skillids: JSON.stringify(selectedSkills)
             }, { withCredentials: true });
             toast.success(res.data.message, {
                 position: 'top-center',
@@ -218,6 +219,21 @@ const PostJob = () => {
         fetchCategories();
     }, [refresh2])
 
+    const [skills, setSkills] = useState([]);
+    useEffect(() => {
+        const fetchSkills = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/api/v1/skill`, { withCredentials: true });
+                setSkills(res.data.skills);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchSkills();
+    }, [])
+
+    const [selectedSkills, setSelectedSkills] = useState([]);
+
     return (
         <>
             <h1 className='panel-heading'>Post Job</h1>
@@ -347,6 +363,18 @@ const PostJob = () => {
                     </FormGroup>
                 </Col>
             </Row>
+            <h3 className="h6 mt-2">Skills Required</h3>
+            <select className="form-select mb-2 mt-2" multiple value={selectedSkills} onChange={(e) =>
+                setSelectedSkills(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+            }>
+                {
+                    skills.map((skill, index) => {
+                        return <option key={index} value={skill._id}>{skill.title}</option>
+                    })
+                }
+            </select>
             <div className='d-flex justify-content-end'>
                 <button className='btn btn-primary mt-2' onClick={handleSaveJob}>Post Job</button>
             </div>

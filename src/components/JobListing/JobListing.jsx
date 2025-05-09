@@ -10,55 +10,11 @@ import { useSearchParams } from 'react-router-dom'
 
 const JobListing = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    // const categoryids = searchParams.get("category");
-    // const jobroleids = searchParams.get("jobrole");
-    // const updateCategoryQuery = (id) => {
-    //     const currentParams = Object.fromEntries([...searchParams]);
-    //     let allcategories = categoryids ? categoryids.split(",") : [];
-    //     const idpresent = allcategories.includes(id);
-    //     if (!idpresent) {
-    //         allcategories.push(id);
-    //     } else {
-    //         const updated = allcategories.filter(item => item !== id);
-    //         allcategories.length = 0;
-    //         Array.prototype.push.apply(allcategories, updated);
-    //     }
-    //     setSearchParams({ ...currentParams, category: allcategories.join(",") });
-    // }
-    // const updateJobroleQuery = (id) => {
-    //     const currentParams = Object.fromEntries([...searchParams]);
-    //     let alljobroles = jobroleids ? jobroleids.split(",") : [];
-    //     const idpresent = alljobroles.includes(id);
-    //     if (!idpresent) {
-    //         alljobroles.push(id);
-    //     } else {
-    //         const updated = alljobroles.filter(item => item !== id);
-    //         alljobroles.length = 0;
-    //         Array.prototype.push.apply(alljobroles, updated);
-    //     }
-    //     setSearchParams({ ...currentParams, jobrole: alljobroles.join(",") });
-    // }
-
     const [showFilters, setShowFilters] = useState(false);
     const [jobs, setJobs] = useState([]);
     const [categories, setCategories] = useState([]);
     const [jobroles, setJobroles] = useState([]);
-    // useEffect(() => {
-    //     const fetchJobs = async () => {
-    //         try {
-    //             const res = await axios.get(`${baseUrl}/api/v1/public/jobs`, {
-    //                 params: {
-    //                     category: categoryids,
-    //                     jobrole: jobroleids
-    //                 }
-    //             });
-    //             setJobs(res.data.jobs);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchJobs();
-    // }, [categoryids, jobroleids])
+    
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -88,9 +44,11 @@ const JobListing = () => {
         const categoryFromParams = searchParams.get("category")?.split(",") || [];
         const jobRolesFromParams = searchParams.get("jobrole")?.split(",") || [];
         const queryFromParams = searchParams.get("q") || '';
+        const locationFromParams = searchParams.get("location") || "";
         setSelectedCategories(categoryFromParams);
         setSelectedJobRoles(jobRolesFromParams);
         setQuery(queryFromParams);
+        setLocation(locationFromParams);
     }, [])
     const toggleCategory = (id) => {
         setSelectedCategories(prev =>
@@ -104,18 +62,21 @@ const JobListing = () => {
     };
 
     const [query, setQuery] = useState("");
+    const [location, setLocation] = useState("");
 
     useEffect(() => {
         const categoryids = searchParams.get("category");
         const jobroleids = searchParams.get("jobrole");
         const queryParam = searchParams.get("q");
+        const locationParam = searchParams.get("location");
         const fetchJobs = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/api/v1/public/jobs`, {
                     params: {
                         category: categoryids,
                         jobrole: jobroleids,
-                        query: queryParam
+                        query: queryParam,
+                        location: locationParam
                     }
                 });
                 setJobs(res.data.jobs);
@@ -136,7 +97,7 @@ const JobListing = () => {
                     </div>
                     <div className={styles.filter2}>
                         <i className={styles.icon}><img src={MapPin} alt='search'/></i>
-                        <input type='text' className={styles.control} placeholder='Your Location'/>
+                        <input type='text' className={styles.control} placeholder='Your Location' value={location} onChange={(e) => setLocation(e.target.value)}/>
                     </div>
                     <div className={styles.filter3}>
                         <div className={`d-flex align-items-center justify-content-end p-2 flex-wrap`}>
@@ -152,6 +113,11 @@ const JobListing = () => {
                                     currentParams.q = query;
                                 } else {
                                     delete currentParams.q;
+                                }
+                                if (location.length > 0) {
+                                    currentParams.location = location;
+                                } else {
+                                    delete currentParams.location;
                                 }
                                 setSearchParams(currentParams);
                             }}>Find Job</button>

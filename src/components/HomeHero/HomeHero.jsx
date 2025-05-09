@@ -6,8 +6,13 @@ import MapPin from '../../assets/fi_map-pin.svg'
 import Icon1 from '../../assets/briefcase.svg'
 import Icon2 from '../../assets/buildings.svg'
 import Icon3 from '../../assets/users.svg'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const HomeHero = () => {
+    const navigate = useNavigate();
+    const [query, setQuery] = useState("");
+    const [location, setLocation] = useState("");
     return (
         <div className={styles.wrapper}>
             <Container>
@@ -21,15 +26,17 @@ const HomeHero = () => {
                                     <div className={styles.row}>
                                         <div className={styles.textCol}>
                                             <i className={styles.icon}><img src={Search} alt='search'/></i>
-                                            <input type='text' className={styles.control} placeholder='Job tittle, Keyword...'/>
+                                            <input type='text' className={styles.control} placeholder='Job tittle, Keyword...' value={query} onChange={(e) => setQuery(e.target.value)}/>
                                         </div>
                                         <div className={styles.locationCol}>
                                             <i className={styles.icon}><img src={MapPin} alt='search'/></i>
-                                            <input type='text' className={styles.control} placeholder='Your Location'/>
+                                            <input type='text' className={styles.control} placeholder='Your Location' value={location} onChange={(e) => setLocation(e.target.value)}/>
                                         </div>
                                     </div>
                                 </div>
-                                <button className={styles.btn}>Find Job</button>
+                                <button className={styles.btn} onClick={() => {
+                                    navigate(`/find-job?q=${query}&location=${location}`)
+                                }}>Find Job</button>
                             </div>
                         </div>
                     </Col>

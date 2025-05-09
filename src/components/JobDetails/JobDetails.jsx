@@ -78,7 +78,8 @@ const JobDetails = () => {
             const res = await axios.post(`${baseUrl}/api/v1/application`, {
                 jobid: id,
                 resumelink: resumeid,
-                coverletter
+                coverletter,
+                matchedskills: data.job.skillids.filter(id => user?.data?.skillids.includes(id)).length
             }, { withCredentials: true });
             toast.success(res.data.message, {
                 position: 'top-center',
@@ -152,7 +153,7 @@ const JobDetails = () => {
                                     </i>
                                     <div className={styles.body}>
                                         <h2 className={styles.heading}>{data.job.title}</h2>
-                                        <span className={styles.action}>at {data.company.name}</span>
+                                        <span className={styles.action}>at {data.company.name} ({data.job.skillids.filter(id => user?.data?.skillids.includes(id)).length}/{data.job.skillids.length} skills matched)</span>
                                     </div>
                                 </div>
                                 <ul className={`d-flex align-items-center ${styles.btns}`}>
@@ -195,7 +196,7 @@ const JobDetails = () => {
                                 </i>
                                 <div className={styles.body}>
                                     <h2 className={styles.heading}>{data.job.title}</h2>
-                                    <span className={styles.action}>at {data.company.name}</span>
+                                    <span className={styles.action}>at {data.company.name} ({data.job.skillids.filter(id => user?.data?.skillids.includes(id)).length}/{data.job.skillids.length} skills matched)</span>
                                 </div>
                             </div>
                             <ul className={`d-flex align-items-center ${styles.btns}`}>
