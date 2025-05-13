@@ -1,0 +1,16 @@
+.chatSidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    transition: 0.3s ease-in-out;
+}
+.chatSidebar.active {
+    right: 0;
+}
+.closebtn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
