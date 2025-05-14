@@ -79,7 +79,8 @@ const JobDetails = () => {
                 jobid: id,
                 resumelink: resumeid,
                 coverletter,
-                matchedskills: data.job.skillids.filter(id => user?.data?.skillids.includes(id)).length
+                matchedskills: data.job.skillids.filter(id => user?.data?.skillids.includes(id)).length,
+                recruiterid: data.postedby
             }, { withCredentials: true });
             toast.success(res.data.message, {
                 position: 'top-center',
